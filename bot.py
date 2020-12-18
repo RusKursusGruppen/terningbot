@@ -6,10 +6,9 @@ from dotenv import load_dotenv
 import discord
 import random
 import re
-
+import terning
 
 troll = "https://topps.diku.dk/torbenm/troll.msp"
-
 data = { 'what' : 'Make random rolls.',
          'trollExp' : '1d20',
          'noOfDice' : '1'
@@ -28,13 +27,8 @@ GUILD = os.getenv('GUILD')
 
 client = discord.Client()
 
-rules = [""] * 20
-
-rules[0] = "Tag 1 bunder!"
-rules[1] = "Tag 1/2 bunder!"
-rules[10] = "Lav en ny regel"
-rules[18] = "Giv 1/2 bunder!"
-rules[19] = "Giv 1 bunder!"
+current_rules_id = 0
+rules = terning.load_rules(current_rules_id)
 
 @client.event
 async def on_message(message):
@@ -50,18 +44,17 @@ async def on_message(message):
         else:
             await message.channel.send(rule)
 
-
     if message.content == '!rules':
-        response = make_roll()
+        response = terning.pretty_rules(rules, current_rules_id)
         await message.channel.send(response)
 
     if message.content == '!save':
-        response = make_roll()
+        response = terning.save_rules(rules, current_rules_id)
         await message.channel.send(response)
 
-    if message.content == '!load':
-        response = make_roll()
+    if message.content[:5] == '!load' and message.content[6:].replace(" ", "").isnumeric():
+        current_rules_id = int(message.content[6:].replace(" ", ""))
+        response = terning.load_rules(current_rules_id)
         await message.channel.send(response)
-
 
 client.run(TOKEN)
