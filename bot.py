@@ -60,4 +60,15 @@ async def on_message(message):
         response = "loaded rules-ID " + str(current_rules_id)
         await message.channel.send(response)
 
+    with message.content.split(" ", 2) as cont:
+        response = "Wrong input"
+        if cont[0] == "!c" and cont[1].isnumeric:
+            rule = int(cont[1])-1
+            if 0 <= rule and rule <= 20:
+                prev_rule = rules[rule]
+                rules[rule] = cont[2]
+                response = "Change rule " + str(rule) + " from " + prev_rule + " to " + rules[rule]
+        await message.channel.send(response)
+
+
 client.run(TOKEN)
