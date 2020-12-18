@@ -49,12 +49,15 @@ async def on_message(message):
         await message.channel.send(response)
 
     if message.content == '!save':
-        response = terning.save_rules(rules, current_rules_id)
+        terning.save_rules(rules, current_rules_id)
+        response = "Saved rules-ID " + str(current_rules_id)
         await message.channel.send(response)
 
     if message.content[:5] == '!load' and message.content[6:].replace(" ", "").isnumeric():
+        terning.save_rules(rules, current_rules_id)
         current_rules_id = int(message.content[6:].replace(" ", ""))
-        response = terning.load_rules(current_rules_id)
+        rules = terning.load_rules(current_rules_id)
+        response = "loaded rules-ID " + str(current_rules_id)
         await message.channel.send(response)
 
 client.run(TOKEN)
