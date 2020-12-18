@@ -37,10 +37,16 @@ async def on_message(message):
 
     if message.content == '!r':
         response = make_roll()
-        rule = rules[int(response)-1]
+        idx = int(response)-1
+        rule = rules[idx]
         await message.channel.send(response)
         if rule == "":
             await message.channel.send("Lav en ny regel!")
+            await message.channel.send(message.author)
+            def check(reaction):
+                return reaction.author == message.author
+            msg = await client.wait_for('message', timeout=60.0, check=check)
+            rules[idx] = msg.content
         else:
             await message.channel.send(rule)
 
