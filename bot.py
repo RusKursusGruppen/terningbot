@@ -47,9 +47,9 @@ async def on_message(message):
         await message.channel.send(response)
         if rule == "":
             await message.channel.send("Lav en ny regel!")
-        else: 
+        else:
             await message.channel.send(rule)
-           
+
 
     if message.content == '!rules':
         response = make_roll()
