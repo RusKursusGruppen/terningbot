@@ -4,19 +4,10 @@ import requests
 
 troll = "https://topps.diku.dk/torbenm/troll.msp"
 
-data = { 'selectExp' : '',
-         'userExp' : '',
+data = { 'what' : 'Make random rolls.',
          'trollExp' : '1d20',
-         'what' : 'Make+random+rolls',
-         'noOfDice' : '1',
-         'precision' : '',
-         'col2' : 'ge',
-         'multiplier' : '',
-         'mailAddr' : '',
-         'mailSubj' : '',
-         'captchaCode' : '788879',
-         'captchaGiven' : '',
-         'description' : '' }
+         'noOfDice' : '1'
+        }
 
 test = requests.post(troll, data=data)
 
