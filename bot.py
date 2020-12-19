@@ -89,7 +89,7 @@ async def on_message(message):
                     test = await client.wait_for('message', timeout=200.0, check=check)
                     if test.content == "skip":
                         break
-                    if (test.isnumeric()):
+                    if (test.content.isnumeric()):
                         idx = int(test.content)-1
                     else:
                         await message.channel.send("idiot! der blev sagt et tal")
